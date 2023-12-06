@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import '../scss/app.scss';
+import '../../scss/app.scss';
 
 const PizzaBlock = ({title, imageUrl, types, sizes, price}) => {
   const [count, setCount] = useState(0);
