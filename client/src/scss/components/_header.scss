@@ -23,10 +23,21 @@
       letter-spacing: 1%;
       text-transform: uppercase;
       font-weight: 800;
+
+      @media(max-width: 485px) {
+        margin-right: 50px;
+      }
+      @media(max-width: 425px) {
+        margin-right: 10px;
+      }
     }
 
     p {
       color: #7b7b7b;
+
+      @media(max-width: 585px) {
+        display: none;
+      }
     }
   }
 }
