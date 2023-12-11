@@ -1,22 +1,28 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import arrowTop from '../img/arrow-top.svg';
+import arrowDown from '../img/arrow-down.svg';
 
-const Sort = () => {
-  const typesSort = ['популярности','цене', 'алфавиту'];
-  const [activeType, setActiveType] = useState(0);
+const Sort = ({activeSort, onClickSort, directionSort, setDirectionSort}) => {
+  const typesSort = [
+    {name: 'популярности', sort: 'rating'},
+    {name: 'цене', sort: 'price'},
+    {name: 'алфавиту', sort: 'title'}
+  ];
+
+
   const [isOpen, setIsOpen] = useState(false);
 
   const updateActiveType = (i) => {
-    setActiveType(i);
+    onClickSort(i);
     setIsOpen(false);
   }
 
     return (
         <div className="sort">
         <div className="sort__label">
-          <img src={arrowTop} alt="" />
+          <img onClick={()=>setDirectionSort(!directionSort)} src={directionSort ? arrowDown : arrowTop} alt="" />
           <b>Сортировка по:</b>
-          <button disabled={isOpen} onClick={()=>setIsOpen(!isOpen)}>{typesSort[activeType]}</button>
+          <button disabled={isOpen} onClick={()=>setIsOpen(!isOpen)}>{activeSort.name}</button>
         </div>
         {
           isOpen &&
@@ -25,10 +31,10 @@ const Sort = () => {
                 {typesSort.map((type, i) => {
                   return (
                     <li key={i}
-                        onClick={()=>updateActiveType(i)}
-                        className={activeType === i ? "active" : ""}
+                        onClick={()=>updateActiveType(type)}
+                        className={type.sort === activeSort.sort ? "active" : ""}
                     >
-                      {type}
+                      {type.name}
                     </li>
                   )
                 })}
