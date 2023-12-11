@@ -9,7 +9,7 @@ import PaginationControlled from '../components/PaginationControlled';
 
 const API_URL = 'https://6570b79e09586eff6641d8d9.mockapi.io/items?';
 
-const Home = () => {
+const Home = ({searchValue}) => {
     const [pizzaItems, setPizzaItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
   
@@ -81,7 +81,9 @@ const Home = () => {
                   new Array(3).fill(1).map((item, i) => <Skeleton key={i}/>)
                 ):
                 (
-                  pizzaItems.map(item=>{
+                  pizzaItems
+                    .filter(item => item.title.toLowerCase().includes(searchValue))
+                    .map(item=>{
                     return <PizzaBlock key={item.id} {...item}/>
                   })
                 )
