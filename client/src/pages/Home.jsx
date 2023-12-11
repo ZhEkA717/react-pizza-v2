@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
@@ -7,21 +8,26 @@ import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import PaginationControlled from '../components/PaginationControlled';
 import { SearchContext } from '../App';
+import { setCategoryId } from '../redux/slices/filterSlice';
 
 const API_URL = 'https://6570b79e09586eff6641d8d9.mockapi.io/items?';
 
 const Home = () => {
+    const categoryId = useSelector(state => state.filter.categoryId)
+    const dispatch = useDispatch();
+    
     const [pizzaItems, setPizzaItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const {searchValue} = useContext(SearchContext);
   
     const [activeSort, setActiveSort] = useState({
       name: "Популярности", sort: 'rating'
     });
     const [directionSort, setDirectionSort] = useState(true);
-    const [activeCategory, setActiveCategory]=useState(0);
+    // const [activeCategory, setActiveCategory]=useState(0);
 
     const [currentPage, setCurrentPage] = useState(1);
+
+    const {searchValue} = useContext(SearchContext);
 
     const limit = 5;
 
@@ -35,7 +41,7 @@ const Home = () => {
 
 
     useEffect(()=>{
-      const category = activeCategory > 0 ? activeCategory : "";
+      const category = categoryId > 0 ? categoryId : "";
       const sortBy = `sortBy=${activeSort.sort}`.sort;
       const order = directionSort ? 'asc' : 'desc';
       
@@ -61,13 +67,13 @@ const Home = () => {
         .then(res => {
           setPizzaItems(res);
         }).finally(()=>{setIsLoading(false);})
-    },[activeCategory, activeSort, directionSort, currentPage])
+    },[categoryId, activeSort, directionSort, currentPage])
 
     return (
         <>
             <div className="content__top">
-                <Categories activeCategory={activeCategory}
-                            onClickCategory={(id)=>setActiveCategory(id)}          
+                <Categories activeCategory={categoryId}
+                            onClickCategory={(id)=>dispatch(setCategoryId(id))}          
                 />
                 <Sort activeSort={activeSort}
                       onClickSort={(id)=>setActiveSort(id)}
