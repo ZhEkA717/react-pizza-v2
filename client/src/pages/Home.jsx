@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useEffect, useState } from 'react';
 
 import Categories from '../components/Categories';
@@ -6,12 +6,14 @@ import Sort from '../components/Sort';
 import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import PaginationControlled from '../components/PaginationControlled';
+import { SearchContext } from '../App';
 
 const API_URL = 'https://6570b79e09586eff6641d8d9.mockapi.io/items?';
 
-const Home = ({searchValue}) => {
+const Home = () => {
     const [pizzaItems, setPizzaItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const {searchValue} = useContext(SearchContext);
   
     const [activeSort, setActiveSort] = useState({
       name: "Популярности", sort: 'rating'
