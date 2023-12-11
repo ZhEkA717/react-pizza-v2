@@ -18,7 +18,7 @@ const Cart = () => {
             </div>
             <div className="content__items content__items_cart">
                 {
-                  new Array(4).fill(1).map(item => <CartItem/>)
+                  new Array(4).fill(1).map((item, i) => <CartItem key={i}/>)
                 }
             </div>
             <div className="cart__bottom">

@@ -5,6 +5,9 @@ import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
+import PaginationControlled from '../components/PaginationControlled';
+
+const API_URL = 'https://6570b79e09586eff6641d8d9.mockapi.io/items?';
 
 const Home = () => {
     const [pizzaItems, setPizzaItems] = useState([]);
@@ -16,19 +19,47 @@ const Home = () => {
     const [directionSort, setDirectionSort] = useState(true);
     const [activeCategory, setActiveCategory]=useState(0);
 
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const limit = 5;
+
+    const [pages, setPages] = useState(1);
+
+    const countPages = (count, limit) => {
+      const p = Math.floor(count/limit);
+      const pRemainder = count - limit * p;
+      return pRemainder ? p + 1 : p;
+    };
+
 
     useEffect(()=>{
-      const category = activeCategory > 0 ? `category=${activeCategory}` : `category=`;
-      const sort = `sortBy=${activeSort.sort}`;
-      const order = `order=${directionSort ? 'asc' : 'desc'}`;
-      const url = `https://6570b79e09586eff6641d8d9.mockapi.io/items?${category}&${sort}&${order}`;
+      const category = activeCategory > 0 ? activeCategory : "";
+      const sortBy = `sortBy=${activeSort.sort}`.sort;
+      const order = directionSort ? 'asc' : 'desc';
+      
+      fetch(API_URL + new URLSearchParams({
+        category,
+        sortBy,
+      }))
+        .then(res => res.json())
+        .then(res => {
+          setPages(countPages(res.length, limit));
+        });
+
+
       setIsLoading(true);
-      fetch(url)
+      fetch(API_URL + new URLSearchParams({
+        category,
+        sortBy,
+        order,
+        page: currentPage,
+        limit, 
+      }))
         .then(res => res.json())
         .then(res => {
           setPizzaItems(res);
         }).finally(()=>{setIsLoading(false);})
-    },[activeCategory, activeSort, directionSort])
+    },[activeCategory, activeSort, directionSort, currentPage])
 
     return (
         <>
@@ -47,7 +78,7 @@ const Home = () => {
               {
                 isLoading ?
                 (
-                  new Array(9).fill(1).map((item, i) => <Skeleton key={i}/>)
+                  new Array(3).fill(1).map((item, i) => <Skeleton key={i}/>)
                 ):
                 (
                   pizzaItems.map(item=>{
@@ -56,6 +87,10 @@ const Home = () => {
                 )
               }
           </div>
+          {
+            pages !== 1 && 
+            <PaginationControlled page={currentPage} pages={pages} changePage={(value)=>setCurrentPage(value)}/>
+          }
         </>
     );
 };
