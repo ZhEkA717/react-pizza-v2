@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
@@ -8,22 +8,19 @@ import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import PaginationControlled from '../components/PaginationControlled';
 import { SearchContext } from '../App';
-import { setCategoryId } from '../redux/slices/filterSlice';
 
 const API_URL = 'https://6570b79e09586eff6641d8d9.mockapi.io/items?';
 
 const Home = () => {
-    const categoryId = useSelector(state => state.filter.categoryId)
-    const dispatch = useDispatch();
+    const categoryId = useSelector(state => state.filter.categoryId);
+    const sort = useSelector(state => state.filter.sort);
     
     const [pizzaItems, setPizzaItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
   
-    const [activeSort, setActiveSort] = useState({
-      name: "Популярности", sort: 'rating'
-    });
-    const [directionSort, setDirectionSort] = useState(true);
-    // const [activeCategory, setActiveCategory]=useState(0);
+    // const [activeSort, setActiveSort] = useState({
+    //   name: "Популярности", sort: 'rating'
+    // });
 
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -42,8 +39,8 @@ const Home = () => {
 
     useEffect(()=>{
       const category = categoryId > 0 ? categoryId : "";
-      const sortBy = `sortBy=${activeSort.sort}`.sort;
-      const order = directionSort ? 'asc' : 'desc';
+      const sortBy = `sortBy=${sort.sort}`;
+      const order = 'asc';
       
       fetch(API_URL + new URLSearchParams({
         category,
@@ -67,19 +64,13 @@ const Home = () => {
         .then(res => {
           setPizzaItems(res);
         }).finally(()=>{setIsLoading(false);})
-    },[categoryId, activeSort, directionSort, currentPage])
+    },[categoryId, sort, currentPage])
 
     return (
         <>
             <div className="content__top">
-                <Categories activeCategory={categoryId}
-                            onClickCategory={(id)=>dispatch(setCategoryId(id))}          
-                />
-                <Sort activeSort={activeSort}
-                      onClickSort={(id)=>setActiveSort(id)}
-                      directionSort={directionSort}
-                      setDirectionSort={(direction)=>setDirectionSort(direction)}                    
-                />
+                <Categories />
+                <Sort/>
             </div>
           <h2 className="content__title">Все пиццы</h2>
           <div className="content__items">
