@@ -23,3 +23,23 @@
     left: 14px;
     top: 12px;
 }
+
+.clear {
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 0px;
+    color: rgba(0,0,0,0.4);
+    height: 100%;
+    width: 50px;
+    border-radius: 0px 10px 10px 0px;
+    justify-content: center;
+    align-items: center;
+    font-size: large;
+    cursor: pointer;
+    transition: color .2s ease-in-out;
+
+    &:hover {
+        color: rgba(0,0,0,0.6);
+    }
+}

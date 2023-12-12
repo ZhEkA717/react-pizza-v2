@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSort } from '../redux/slices/filterSlice';
 const Sort = () => {
   const typesSort = [
-    {name: 'популярности', sort: 'rating'},
-    {name: 'цене', sort: 'price'},
-    {name: 'алфавиту', sort: 'title'}
+    {name: 'популярности', sortProperty: 'rating'},
+    {name: 'цене', sortProperty: 'price'},
+    {name: 'алфавиту', sortProperty: 'title'}
   ];
-  const sort = useSelector(state => state.filter.sort);
+  const sortObj = useSelector(state => state.filter.sortObj);
   const dispatch = useDispatch();
 
 
@@ -24,7 +24,7 @@ const Sort = () => {
         <div className="sort__label">
           <img src={arrowTop} alt="" />
           <b>Сортировка по:</b>
-          <button disabled={isOpen} onClick={()=>setIsOpen(!isOpen)}>{sort.name}</button>
+          <button disabled={isOpen} onClick={()=>setIsOpen(!isOpen)}>{sortObj.name}</button>
         </div>
         {
           isOpen &&
@@ -34,7 +34,7 @@ const Sort = () => {
                   return (
                     <li key={i}
                         onClick={()=>updateActiveType(type)}
-                        className={type.sort === sort.sort ? "active" : ""}
+                        className={type.sort === sortObj.sortProperty ? "active" : ""}
                     >
                       {type.name}
                     </li>
