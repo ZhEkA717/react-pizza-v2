@@ -2,12 +2,14 @@ import { useState } from 'react';
 import arrowTop from '../img/arrow-top.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSort } from '../redux/slices/filterSlice';
+
+export const typesSort = [
+  {name: 'популярности', sortProperty: 'rating'},
+  {name: 'цене', sortProperty: 'price'},
+  {name: 'алфавиту', sortProperty: 'title'}
+];
+
 const Sort = () => {
-  const typesSort = [
-    {name: 'популярности', sortProperty: 'rating'},
-    {name: 'цене', sortProperty: 'price'},
-    {name: 'алфавиту', sortProperty: 'title'}
-  ];
   const sortObj = useSelector(state => state.filter.sortObj);
   const dispatch = useDispatch();
 

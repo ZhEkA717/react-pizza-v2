@@ -9,7 +9,7 @@ function PaginationControlled() {
   const pageCount = useSelector(state => state.filter.pageCount);
   const dispatch = useDispatch();
 
-  const handleChange = (event, value) => {
+  const handleChange = (_, value) => {
     dispatch(setPageCount(value));
   };
 
