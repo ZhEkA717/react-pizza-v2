@@ -3,8 +3,11 @@ import CartItem from '../components/CartItem';
 import removeImg from '../img/trash.svg'
 import backImg from '../img/grey-arrow-left.svg'
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const Cart = () => {
+  const totalPrice = useSelector(state => state.cart.totalPrice);
+  const products = useSelector(state => state.cart.items);
     return (
         <div className="content">
         <div className="container container--cart">
@@ -18,13 +21,13 @@ const Cart = () => {
             </div>
             <div className="content__items content__items_cart">
                 {
-                  new Array(4).fill(1).map((item, i) => <CartItem key={i}/>)
+                  products.map((item, i) => <CartItem key={i} {...item}/>)
                 }
             </div>
             <div className="cart__bottom">
               <div className="cart__bottom-details">
-                <span> Всего пицц: <b>3 шт.</b> </span>
-                <span> Сумма заказа: <b>900 ₽</b> </span>
+                <span> Всего пицц: <b>{products.reduce((start, {count}) => start + count, 0 )} шт.</b> </span>
+                <span> Сумма заказа: <b>{totalPrice} ₽</b> </span>
               </div>
               <div className="cart__bottom-buttons">
                 <Link to="/" className="button button--outline button--add go-back-btn">

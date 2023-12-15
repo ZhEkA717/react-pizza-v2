@@ -100,7 +100,7 @@ const Home = () => {
             pizzaItems
               .filter(item => item.title.toLowerCase().includes(searchValue))
               .map(item=>{
-              return <PizzaBlock key={item.id} {...item}/>
+              return <PizzaBlock key={item.id} items={pizzaItems} {...item} />
             })
           )
         }

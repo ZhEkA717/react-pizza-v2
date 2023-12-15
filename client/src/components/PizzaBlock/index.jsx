@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import '../../scss/app.scss';
 import plus from '../../img/plus.svg';
+import { useDispatch } from 'react-redux';
+import { addProduct } from '../../redux/slices/cartSlice';
 
-const PizzaBlock = ({title, imageUrl, types, sizes, price}) => {
+const PizzaBlock = ({id,title, imageUrl, types, sizes, price, items}) => {
   const [count, setCount] = useState(0);
+  const dispatch = useDispatch();
   
   const typesPizza = ['тонкое', 'традиционное'];
 
@@ -12,6 +15,15 @@ const PizzaBlock = ({title, imageUrl, types, sizes, price}) => {
 
   const updateCount = () => {
     setCount(prev => prev + 1)
+    const count = 1;
+    const product = {
+      id,
+      title, imageUrl,
+      price,
+      type: typesPizza[activeType],
+      size: sizes[activeSize]
+    }
+    dispatch(addProduct({count,product}));
   }
 
     return (
