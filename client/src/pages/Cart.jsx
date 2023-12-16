@@ -3,25 +3,30 @@ import CartItem from '../components/CartItem';
 import removeImg from '../img/trash.svg'
 import backImg from '../img/grey-arrow-left.svg'
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearProduct } from '../redux/slices/cartSlice';
+import EmptyCart from '../components/EmpryCart';
 
 const Cart = () => {
   const totalPrice = useSelector(state => state.cart.totalPrice);
   const products = useSelector(state => state.cart.items);
+  const dispatch = useDispatch();
     return (
         <div className="content">
         <div className="container container--cart">
           <div className="cart">
             <div className="cart__top">
               <h2 className="content__title">Корзина</h2>
-              <div className="cart__clear">
+              {products.length > 0 && <div onClick={() => dispatch(clearProduct())} className="cart__clear">
                 <img src={removeImg} alt="remove" />
                 <span>Очистить корзину</span>
-              </div>
+              </div>}
             </div>
             <div className="content__items content__items_cart">
                 {
+                  products.length?
                   products.map((item, i) => <CartItem key={i} {...item}/>)
+                  : <EmptyCart/>
                 }
             </div>
             <div className="cart__bottom">

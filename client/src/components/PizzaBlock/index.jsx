@@ -1,12 +1,16 @@
 import { useState } from 'react';
 import '../../scss/app.scss';
 import plus from '../../img/plus.svg';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addProduct } from '../../redux/slices/cartSlice';
 
 const PizzaBlock = ({id,title, imageUrl, types, sizes, price, items}) => {
-  const [count, setCount] = useState(0);
+  const products = useSelector(state => state.cart.items)
   const dispatch = useDispatch();
+
+  const count = products
+    .filter(({product})=> product.id === id)
+    .reduce((start, {count})=>start + count, 0)
   
   const typesPizza = ['тонкое', 'традиционное'];
 
@@ -14,7 +18,6 @@ const PizzaBlock = ({id,title, imageUrl, types, sizes, price, items}) => {
   const [activeSize, setActiveSize] = useState(0)
 
   const updateCount = () => {
-    setCount(prev => prev + 1)
     const count = 1;
     const product = {
       id,
@@ -65,7 +68,9 @@ const PizzaBlock = ({id,title, imageUrl, types, sizes, price, items}) => {
     <button onClick={updateCount} className="button button--outline button--add">
       <img src={plus} alt="plus" />
       <span>Добавить</span>
-      <i>{count}</i>
+      {
+        count !==0 && <i>{count}</i>
+      }
     </button>
   </div>
 </div>
