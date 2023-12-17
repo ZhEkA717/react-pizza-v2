@@ -12,7 +12,7 @@ import Skeleton from '../components/PizzaBlock/Skeleton';
 import PaginationControlled from '../components/PaginationControlled';
 import { selectFilter, setFilters } from '../redux/slices/filterSlice';
 import { SearchContext } from '../App';
-import { fetchProduct } from '../redux/slices/productSlice';
+import { fetchProduct, selectProducts } from '../redux/slices/productSlice';
 
 const LIMIT = 4;
 
@@ -22,7 +22,7 @@ const Home = () => {
     const isSearch = useRef(false);
     const isMounted = useRef(false);
 
-    const { items: pizzaItems, status } = useSelector(state => state.products); 
+    const { items: pizzaItems, status } = useSelector(selectProducts); 
 
     const {searchValue} = useContext(SearchContext);
 
