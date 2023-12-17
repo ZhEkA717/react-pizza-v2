@@ -1,9 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useRef } from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
-import env from "react-dotenv";
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,40 +10,33 @@ import Sort, { typesSort } from '../components/Sort';
 import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import PaginationControlled from '../components/PaginationControlled';
-import { setFilters } from '../redux/slices/filterSlice';
+import { selectFilter, setFilters } from '../redux/slices/filterSlice';
 import { SearchContext } from '../App';
+import { fetchProduct } from '../redux/slices/productSlice';
 
 const LIMIT = 4;
 
 const Home = () => {
-    const categoryId = useSelector(state => state.filter.categoryId);
-    const sortObj = useSelector(state => state.filter.sortObj);
-    const pageCount = useSelector(state => state.filter.pageCount);
+    const {categoryId, sortObj, pageCount} = useSelector(selectFilter);
     const dispatch = useDispatch();
     const isSearch = useRef(false);
     const isMounted = useRef(false);
 
-    const [pizzaItems, setPizzaItems] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const { items: pizzaItems, status } = useSelector(state => state.products); 
 
     const {searchValue} = useContext(SearchContext);
 
     const navigate = useNavigate();
 
     const fetchPizzas = () => {
-      setIsLoading(true);
-      axios.get(env.API_URL, {
-        params: {
-          category: categoryId > 0 ? categoryId : "",
-          sortBy: sortObj.sortProperty,
-          order: 'asc',
-          page: pageCount,
-          limit: LIMIT, 
-        }
-      })    
-        .then(({data}) => {
-          setPizzaItems(data);
-        }).finally(()=>{setIsLoading(false);})
+      const param = {
+        category: categoryId > 0 ? categoryId : "",
+        sortBy: sortObj.sortProperty,
+        order: 'asc',
+        page: pageCount,
+        limit: LIMIT, 
+      }
+      dispatch(fetchProduct(param))
     }
 
     useEffect(()=>{
@@ -92,14 +83,15 @@ const Home = () => {
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
         {
-          isLoading ?
+          status === 'loading' ?
           (
-            new Array(6).fill(1).map((_, i) => <Skeleton key={i}/>)
-          ):
+            new Array(LIMIT).fill(1).map((_, i) => <Skeleton key={i}/>)
+          ): status === 'error' ?
+          'Что-то пошло не так. Не удалось отобразить пиццы.':
           (
             pizzaItems
-              .filter(item => item.title.toLowerCase().includes(searchValue))
-              .map(item=>{
+              ?.filter(item => item.title.toLowerCase().includes(searchValue))
+              ?.map(item=>{
               return <PizzaBlock key={item.id} items={pizzaItems} {...item} />
             })
           )

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import arrowTop from '../img/arrow-top.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSort } from '../redux/slices/filterSlice';
+import { selectFilter, setSort } from '../redux/slices/filterSlice';
 
 export const typesSort = [
   {name: 'популярности', sortProperty: 'rating'},
@@ -10,7 +10,7 @@ export const typesSort = [
 ];
 
 const Sort = () => {
-  const sortObj = useSelector(state => state.filter.sortObj);
+  const {sortObj} = useSelector(selectFilter);
   const dispatch = useDispatch();
   const sortRef = useRef();
 

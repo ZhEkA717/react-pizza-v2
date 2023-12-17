@@ -2,10 +2,10 @@ import { useState } from 'react';
 import '../../scss/app.scss';
 import plus from '../../img/plus.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { addProduct } from '../../redux/slices/cartSlice';
+import { addProduct, selectCart } from '../../redux/slices/cartSlice';
 
 const PizzaBlock = ({id,title, imageUrl, types, sizes, price, items}) => {
-  const products = useSelector(state => state.cart.items)
+  const {items:products} = useSelector(selectCart)
   const dispatch = useDispatch();
 
   const count = products
