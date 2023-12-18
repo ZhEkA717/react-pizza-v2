@@ -1,8 +1,8 @@
-import React from 'react';
+import { FC } from 'react';
 import cartImg from '../../img/cart.svg';
 import styles from './EmptyCart.module.scss';
 
-const EmptyCart = () => {
+const EmptyCart: FC = () => {
     return (
         <div className={styles.root}>
             <img src={cartImg} alt="cart-icon" />

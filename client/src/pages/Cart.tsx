@@ -1,17 +1,17 @@
-import React from 'react';
 import CartItem from '../components/CartItem';
 import removeImg from '../img/trash.svg'
 import backImg from '../img/grey-arrow-left.svg'
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearProduct, selectCart } from '../redux/slices/cartSlice';
-import EmptyCart from '../components/EmpryCart';
+import EmptyCart from '../components/EmptyCart';
+import { TypeCartSlice } from '../@types/cart.type';
 
 const Cart = () => {
-  const {totalPrice, items: products} = useSelector(selectCart);
+  const {totalPrice, items: products}: TypeCartSlice = useSelector(selectCart);
   const dispatch = useDispatch();
     return (
-        <div className="content">
+      <div className="content">
         <div className="container container--cart">
           <div className="cart">
             <div className="cart__top">

@@ -12,16 +12,18 @@ import Skeleton from '../components/PizzaBlock/Skeleton';
 import PaginationControlled from '../components/PaginationControlled';
 import { selectFilter, setFilters } from '../redux/slices/filterSlice';
 import { fetchProduct, selectProducts } from '../redux/slices/productSlice';
+import { TypeProductsSlice } from '../@types/pizza.type';
+import { AppDispatch } from '../redux/store';
 
 const LIMIT = 4;
 
 const Home = () => {
     const {searchValue, categoryId, sortObj, pageCount} = useSelector(selectFilter);
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const isSearch = useRef(false);
     const isMounted = useRef(false);
 
-    const { items: pizzaItems, status } = useSelector(selectProducts); 
+    const { items: pizzaItems, status }:TypeProductsSlice = useSelector(selectProducts); 
 
     const navigate = useNavigate();
 
@@ -33,7 +35,7 @@ const Home = () => {
         page: pageCount,
         limit: LIMIT, 
       }
-      dispatch(fetchProduct(param))
+      dispatch(fetchProduct(param));
     }
 
     useEffect(()=>{
@@ -41,13 +43,14 @@ const Home = () => {
       if (queryString) {
         const params = qs
           .parse(queryString.substring(1));
-        const sortObj = typesSort
+        const sortObj  = typesSort
           .find(item => item.sortProperty === params.sortProperty);
-        
-        dispatch(setFilters({
-          ...params,
-          sortObj,
-        }));
+        console.log(params);
+          dispatch(setFilters({
+            ...params,
+            sortObj,
+          }));
+
         isSearch.current = true;
       }
     }, [dispatch]);

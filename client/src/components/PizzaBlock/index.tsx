@@ -4,11 +4,13 @@ import plus from '../../img/plus.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { addProduct, selectCart } from '../../redux/slices/cartSlice';
 import { Link } from 'react-router-dom';
+import { TypePizza } from '../../@types/pizza.type';
+import { TypeCartSlice } from '../../@types/cart.type';
 
 export const typesPizza = ['тонкое', 'традиционное'];
 
-const PizzaBlock = ({id,title, imageUrl, types, sizes, price}) => {
-  const {items:products} = useSelector(selectCart)
+const PizzaBlock = ({id,title, imageUrl, types, sizes, price}: TypePizza) => {
+  const {items:products}: TypeCartSlice = useSelector(selectCart)
   const dispatch = useDispatch();
 
   const count = products

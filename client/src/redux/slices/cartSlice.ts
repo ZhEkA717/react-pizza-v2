@@ -1,11 +1,17 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { TypeCartItem, TypeCartProduct, TypeCartSlice } from '../../@types/cart.type';
+import { RootState } from '../store';
 
-const initialState = {
+const initialState: TypeCartSlice = {
     items: [],
     totalPrice: 0,
 }
 
-const findProduct = (arr, id, type, size) => {
+const findProduct = (
+  arr: TypeCartItem[], 
+  id: string, 
+  type: string, 
+  size: number) : {index: number | undefined, findItem: TypeCartItem | undefined} => {
   let index;
   const findItem = arr.find(({product}, i) => {
     index = i;
@@ -17,14 +23,15 @@ const findProduct = (arr, id, type, size) => {
   }
 }
 
-const updateTotalPrice = (arr) => arr
-  .reduce((start, item) => start + item.product.price*item.count, 0);
+const updateTotalPrice = (arr: TypeCartItem[]) => arr
+  .reduce((start: number, {product, count} : TypeCartItem) => start + product.price*count, 0);
+
 
 export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addProduct(state, action) {
+    addProduct(state, action: PayloadAction<TypeCartItem>) {
       const {id, type, size} = action.payload.product;
 
       const {findItem} = findProduct(state.items, id, type, size);
@@ -37,10 +44,13 @@ export const cartSlice = createSlice({
   
       state.totalPrice = updateTotalPrice(state.items);
     },
-    removeProduct(state, action) {
+    removeProduct(state, action:PayloadAction<TypeCartProduct>) {
       const {id, type, size} = action.payload;
       const {index} = findProduct(state.items, id, type, size);
-      delete state.items[index];
+      if (index) {
+        delete state.items[index];
+
+      }
       state.items = state.items.filter(item => item && item);
       state.totalPrice = updateTotalPrice(state.items);
     },
@@ -48,20 +58,24 @@ export const cartSlice = createSlice({
       state.items = [];
       state.totalPrice = updateTotalPrice(state.items);
     },
-    plusProduct(state, action) {
+    plusProduct(state, action:PayloadAction<TypeCartProduct>) {
       const {id, type, size} = action.payload;
       const {findItem} = findProduct(state.items, id, type, size);
       findItem && (findItem.count += 1);
       state.totalPrice = updateTotalPrice(state.items);
     },
-    minusProduct(state, action) {
+    minusProduct(state, action:PayloadAction<TypeCartItem>) {
+      console.log(action.payload);
+
       const {id, type, size} = action.payload.product;
       const {count} = action.payload;
       const {findItem, index} = findProduct(state.items, id, type, size);
       if (count > 1 ) {
         findItem && (findItem.count -= 1);
       } else {
-        delete state.items[index];
+        if (index) {
+          delete state.items[index];
+        }
         state.items = state.items.filter(item => item && item)
       }
       state.totalPrice = updateTotalPrice(state.items);
@@ -69,7 +83,7 @@ export const cartSlice = createSlice({
   },
 })
 
-export const selectCart = state => state.cart;
+export const selectCart = (state: RootState) => state.cart;
 
 
 export const { addProduct, removeProduct, clearProduct, plusProduct, minusProduct } = cartSlice.actions;
