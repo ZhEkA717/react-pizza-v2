@@ -47,9 +47,8 @@ export const cartSlice = createSlice({
     removeProduct(state, action:PayloadAction<TypeCartProduct>) {
       const {id, type, size} = action.payload;
       const {index} = findProduct(state.items, id, type, size);
-      if (index) {
+      if (index || index === 0) {
         delete state.items[index];
-
       }
       state.items = state.items.filter(item => item && item);
       state.totalPrice = updateTotalPrice(state.items);
