@@ -12,7 +12,7 @@ import Skeleton from '../components/PizzaBlock/Skeleton';
 import PaginationControlled from '../components/PaginationControlled';
 import { selectFilter, setFilters } from '../redux/slices/filterSlice';
 import { fetchProduct, selectProducts } from '../redux/slices/productSlice';
-import { TypeProductsSlice } from '../@types/pizza.type';
+import { TypeProductsSlice } from '../types/pizza.type';
 import { AppDispatch } from '../redux/store';
 
 const LIMIT = 4;
@@ -30,7 +30,7 @@ const Home = () => {
     const fetchPizzas = () => {
       const param = {
         category: categoryId > 0 ? categoryId : "",
-        sortBy: sortObj.sortProperty,
+        sortBy: sortObj?.sortProperty,
         order: 'asc',
         page: pageCount,
         limit: LIMIT, 
@@ -43,13 +43,17 @@ const Home = () => {
       if (queryString) {
         const params = qs
           .parse(queryString.substring(1));
+
         const sortObj  = typesSort
           .find(item => item.sortProperty === params.sortProperty);
-        console.log(params);
-          dispatch(setFilters({
-            ...params,
-            sortObj,
-          }));
+
+        const resObj = {
+          categoryId: params.categoryId as string,
+          sortProperty: params.sortProperty as string,
+          pageCount: params.pageCount as string,
+          sortObj,
+        }
+        dispatch(setFilters(resObj));
 
         isSearch.current = true;
       }
@@ -65,7 +69,7 @@ const Home = () => {
     useEffect(()=> {
       if (isMounted.current) {
         const queryString = qs.stringify({
-          sortProperty: sortObj.sortProperty,
+          sortProperty: sortObj?.sortProperty,
           categoryId,
           pageCount,
         });

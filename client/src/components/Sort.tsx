@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import arrowTop from '../img/arrow-top.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectFilter, setSort } from '../redux/slices/filterSlice';
-import { TypeSortObj } from '../@types/filter.type';
+import { TypeSortObj } from '../types/filter.type';
 
 export const typesSort: TypeSortObj[] = [
   {name: 'популярности', sortProperty: 'rating'},
@@ -11,7 +11,7 @@ export const typesSort: TypeSortObj[] = [
 ];
 
 const Sort = () => {
-  const {sortObj} : {sortObj: TypeSortObj} = useSelector(selectFilter);
+  const {sortObj} : {sortObj: TypeSortObj | undefined} = useSelector(selectFilter);
   const dispatch = useDispatch();
   const sortRef = useRef<HTMLDivElement>(null);
 
@@ -53,7 +53,7 @@ const Sort = () => {
                   return (
                     <li key={i}
                         onClick={()=>updateActiveType(type)}
-                        className={type.sortProperty === sortObj.sortProperty ? "active" : ""}
+                        className={type.sortProperty === sortObj?.sortProperty ? "active" : ""}
                     >
                       {type.name}
                     </li>

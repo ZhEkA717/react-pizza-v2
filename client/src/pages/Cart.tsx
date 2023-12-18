@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearProduct, selectCart } from '../redux/slices/cartSlice';
 import EmptyCart from '../components/EmptyCart';
-import { TypeCartSlice } from '../@types/cart.type';
+import { TypeCartSlice } from '../types/cart.type';
 
 const Cart = () => {
   const {totalPrice, items: products}: TypeCartSlice = useSelector(selectCart);

@@ -2,7 +2,7 @@ export interface TypeFilterSlice {
     searchValue: string,
     categoryId: number,
     pageCount: number,
-    sortObj: TypeSortObj
+    sortObj: TypeSortObj | undefined
 }
 
 export type TypeSortObj = {
@@ -14,6 +14,6 @@ export type TypeSortObj = {
 export type TypeFilters = {
     categoryId: string,
     pageCount: string,
-    sortObj?: TypeSortObj,
     sortProperty: string,
+    sortObj: TypeSortObj | undefined
 }

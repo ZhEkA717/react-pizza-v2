@@ -4,8 +4,8 @@ import plus from '../../img/plus.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { addProduct, selectCart } from '../../redux/slices/cartSlice';
 import { Link } from 'react-router-dom';
-import { TypePizza } from '../../@types/pizza.type';
-import { TypeCartSlice } from '../../@types/cart.type';
+import { TypePizza } from '../../types/pizza.type';
+import { TypeCartSlice } from '../../types/cart.type';
 
 export const typesPizza = ['тонкое', 'традиционное'];
 

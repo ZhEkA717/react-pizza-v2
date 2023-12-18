@@ -16,7 +16,7 @@ const PizzaBlockDescription = () => {
     },[]);
 
     return (
-        <div style={{display: 'flex', gap: 100, fontSize: '28px', textAlign: 'justify', height: '500px'}}>
+        <div style={{display: 'flex', gap: 100, fontSize: '28px', textAlign: 'justify', height: 'fit-content'}}>
             {
                 status === 'loading' ?
                     (
