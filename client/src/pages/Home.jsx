@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useRef } from 'react';
+import { useRef } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import qs from 'qs';
@@ -11,20 +11,17 @@ import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import PaginationControlled from '../components/PaginationControlled';
 import { selectFilter, setFilters } from '../redux/slices/filterSlice';
-import { SearchContext } from '../App';
 import { fetchProduct, selectProducts } from '../redux/slices/productSlice';
 
 const LIMIT = 4;
 
 const Home = () => {
-    const {categoryId, sortObj, pageCount} = useSelector(selectFilter);
+    const {searchValue, categoryId, sortObj, pageCount} = useSelector(selectFilter);
     const dispatch = useDispatch();
     const isSearch = useRef(false);
     const isMounted = useRef(false);
 
     const { items: pizzaItems, status } = useSelector(selectProducts); 
-
-    const {searchValue} = useContext(SearchContext);
 
     const navigate = useNavigate();
 
@@ -92,7 +89,7 @@ const Home = () => {
             pizzaItems
               ?.filter(item => item.title.toLowerCase().includes(searchValue))
               ?.map(item=>{
-              return <PizzaBlock key={item.id} items={pizzaItems} {...item} />
+              return <PizzaBlock key={item.id} {...item} />
             })
           )
         }
