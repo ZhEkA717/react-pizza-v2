@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { TypeCartItem, TypeCartProduct, TypeCartSlice } from '../../types/cart.type';
-import { RootState } from '../store';
+import { TypeCartItem, TypeCartProduct, TypeCartSlice } from './type';
 
 const initialState: TypeCartSlice = {
     items: [],
@@ -72,7 +71,7 @@ export const cartSlice = createSlice({
       if (count > 1 ) {
         findItem && (findItem.count -= 1);
       } else {
-        if (index) {
+        if (index || index === 0) {
           delete state.items[index];
         }
         state.items = state.items.filter(item => item && item)
@@ -81,9 +80,6 @@ export const cartSlice = createSlice({
     }
   },
 })
-
-export const selectCart = (state: RootState) => state.cart;
-
 
 export const { addProduct, removeProduct, clearProduct, plusProduct, minusProduct } = cartSlice.actions;
 

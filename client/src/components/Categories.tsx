@@ -1,8 +1,8 @@
 import { useDispatch } from 'react-redux';
 import '../scss/app.scss';
-import { setCategoryId } from '../redux/slices/filterSlice';
 import React from 'react';
-import { CategoriesProps } from '../types/filter.type';
+import { CategoriesProps } from '../redux/filter/type';
+import { setCategoryId } from '../redux/filter/slice';
 
 const categories = ['Все','Мясные','Вегетарианская','Гриль','Острые','Закрытые'];
 

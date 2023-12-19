@@ -1,8 +1,8 @@
 import { FC, memo, useEffect, useRef, useState } from 'react';
 import arrowTop from '../img/arrow-top.svg';
 import { useDispatch } from 'react-redux';
-import { setSort } from '../redux/slices/filterSlice';
-import { SortProps, TypeSortObj } from '../types/filter.type';
+import { SortProps, TypeSortObj } from '../redux/filter/type';
+import { setSort } from '../redux/filter/slice';
 
 export const typesSort: TypeSortObj[] = [
   {name: 'популярности', sortProperty: 'rating'},

@@ -10,10 +10,11 @@ import Sort, { typesSort } from '../components/Sort';
 import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import PaginationControlled from '../components/PaginationControlled';
-import { selectFilter, setFilters } from '../redux/slices/filterSlice';
-import { fetchProduct, selectProducts } from '../redux/slices/productSlice';
-import { TypeProductsSlice } from '../types/pizza.type';
 import { AppDispatch } from '../redux/store';
+import { selectFilter } from '../redux/filter/selector';
+import { TypeProductsSlice } from '../redux/product/type';
+import { fetchProduct, selectProducts } from '../redux/product/slice';
+import { setFilters } from '../redux/filter/slice';
 
 const LIMIT = 4;
 

@@ -3,9 +3,10 @@ import removeImg from '../img/trash.svg'
 import backImg from '../img/grey-arrow-left.svg'
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearProduct, selectCart } from '../redux/slices/cartSlice';
 import EmptyCart from '../components/EmptyCart';
-import { TypeCartSlice } from '../types/cart.type';
+import { selectCart } from '../redux/cart/selectors';
+import { TypeCartSlice } from '../redux/cart/type';
+import { clearProduct } from '../redux/cart/slice';
 
 const Cart = () => {
   const {totalPrice, items: products}: TypeCartSlice = useSelector(selectCart);

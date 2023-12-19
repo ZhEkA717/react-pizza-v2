@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import env from 'react-dotenv';
 import { RootState } from '../store';
-import { TypePizza, TypeProductsSlice } from '../../types/pizza.type';
+import { TypePizza, TypeProductsSlice } from './type';
 
 export type TypeFetchParams = {
   category: number | string,

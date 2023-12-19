@@ -1,8 +1,8 @@
 import plusImg from '../img/plus.svg'
 import minusImg from '../img/minus.svg'
-import { removeProduct, plusProduct, minusProduct } from '../redux/slices/cartSlice';
 import { useDispatch } from 'react-redux';
-import { TypeCartItem } from '../types/cart.type';
+import { TypeCartItem } from '../redux/cart/type';
+import { minusProduct, plusProduct, removeProduct } from '../redux/cart/slice';
 
 const CartItem = ({count, product}: TypeCartItem) => {
   const dispatch = useDispatch();

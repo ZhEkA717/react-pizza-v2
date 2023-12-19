@@ -2,10 +2,11 @@ import { useState } from 'react';
 import '../../scss/app.scss';
 import plus from '../../img/plus.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { addProduct, selectCart } from '../../redux/slices/cartSlice';
 import { Link } from 'react-router-dom';
-import { TypePizza } from '../../types/pizza.type';
-import { TypeCartSlice } from '../../types/cart.type';
+import { TypePizza } from '../../redux/product/type';
+import { selectCart } from '../../redux/cart/selectors';
+import { TypeCartSlice } from '../../redux/cart/type';
+import { addProduct } from '../../redux/cart/slice';
 
 export const typesPizza = ['тонкое', 'традиционное'];
 
