@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import cartImg from '../../img/cart.svg';
+import { cartImg } from '../../img/';
 import styles from './EmptyCart.module.scss';
 
 const EmptyCart: FC = () => {

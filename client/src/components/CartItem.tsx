@@ -1,8 +1,7 @@
-import plusImg from '../img/plus.svg'
-import minusImg from '../img/minus.svg'
 import { useDispatch } from 'react-redux';
-import { TypeCartItem } from '../redux/cart/type';
-import { minusProduct, plusProduct, removeProduct } from '../redux/cart/slice';
+import { plusIcon, minusIcon } from '../img';
+
+import { minusProduct, plusProduct, removeProduct, TypeCartItem } from '../redux';
 
 const CartItem = ({count, product}: TypeCartItem) => {
   const dispatch = useDispatch();
@@ -22,12 +21,12 @@ const CartItem = ({count, product}: TypeCartItem) => {
         <div className="cart__item-count">
           <div onClick={()=>dispatch(minusProduct({count, product}))} 
                className="button button--outline button--circle cart__item-count-minus">
-            <img src={minusImg} alt="minus" />
+            <img src={minusIcon} alt="minus" />
           </div>
           <b>{count}</b>
           <div onClick={()=>dispatch(plusProduct(product))} 
                className="button button--outline button--circle cart__item-count-plus">
-            <img src={plusImg} alt="plus" />
+            <img src={plusIcon} alt="plus" />
           </div>
         </div>
         <div className="cart__item-price">

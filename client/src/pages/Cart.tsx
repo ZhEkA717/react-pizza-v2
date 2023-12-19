@@ -1,13 +1,11 @@
-import CartItem from '../components/CartItem';
-import removeImg from '../img/trash.svg'
-import backImg from '../img/grey-arrow-left.svg'
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import EmptyCart from '../components/EmptyCart';
-import { selectCart } from '../redux/cart/selectors';
-import { TypeCartSlice } from '../redux/cart/type';
-import { clearProduct } from '../redux/cart/slice';
-import getCountPizza from '../utils/getCountPizza';
+
+import { CartItem, EmptyCart } from '../components';
+import { selectCart, TypeCartSlice, clearProduct } from '../redux';
+import { getCountPizza } from '../utils';
+import { trashIcon, greyArrowLeftIcon} from '../img';
+
 
 const Cart = () => {
   const {totalPrice, items: products}: TypeCartSlice = useSelector(selectCart);
@@ -19,7 +17,7 @@ const Cart = () => {
             <div className="cart__top">
               <h2 className="content__title">Корзина</h2>
               {products.length > 0 && <div onClick={() => dispatch(clearProduct())} className="cart__clear">
-                <img src={removeImg} alt="remove" />
+                <img src={trashIcon} alt="remove" />
                 <span>Очистить корзину</span>
               </div>}
             </div>
@@ -37,7 +35,7 @@ const Cart = () => {
               </div>
               <div className="cart__bottom-buttons">
                 <Link to="/" className="button button--outline button--add go-back-btn">
-                  <img src={backImg} alt="" />
+                  <img src={greyArrowLeftIcon} alt="back" />
                   <span>Вернуться назад</span>
                 </Link>
                 <div className="button pay-btn">

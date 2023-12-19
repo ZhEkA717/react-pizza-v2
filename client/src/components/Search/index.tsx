@@ -1,9 +1,11 @@
-import styles from './Search.module.scss';
-import debounce from 'lodash.debounce';
-import searchIcon from '../../img/search-icon.svg';
 import { ChangeEvent, useCallback, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setSearchValue } from '../../redux/filter/slice';
+import debounce from 'lodash.debounce';
+import styles from './Search.module.scss';
+
+import { searchIcon } from '../../img';
+
+import { setSearchValue } from '../../redux';
 
 const Search = () => {
     const dispatch = useDispatch();

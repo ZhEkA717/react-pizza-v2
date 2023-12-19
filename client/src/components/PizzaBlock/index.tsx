@@ -1,12 +1,10 @@
 import { useState } from 'react';
-import '../../scss/app.scss';
-import plus from '../../img/plus.svg';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { TypePizza } from '../../redux/product/type';
-import { selectCart } from '../../redux/cart/selectors';
-import { TypeCartSlice } from '../../redux/cart/type';
-import { addProduct } from '../../redux/cart/slice';
+import { useDispatch, useSelector } from 'react-redux';
+import '../../scss/app.scss';
+import { plusIcon } from '../../img';
+
+import { TypePizza, selectCart, TypeCartSlice, addProduct } from '../../redux';
 
 export const typesPizza = ['тонкое', 'традиционное'];
 
@@ -73,7 +71,7 @@ const PizzaBlock = ({id,title, imageUrl, types, sizes, price}: TypePizza) => {
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">от {price} ₽</div>
         <button onClick={updateCount} className="button button--outline button--add">
-          <img src={plus} alt="plus" />
+          <img src={plusIcon} alt="plus" />
           <span>Добавить</span>
           {
             count !==0 && <i>{count}</i>

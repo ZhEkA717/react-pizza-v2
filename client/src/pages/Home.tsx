@@ -5,17 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 
-import Categories from '../components/Categories';
-import Sort, { typesSort } from '../components/Sort';
-import PizzaBlock from '../components/PizzaBlock';
-import Skeleton from '../components/PizzaBlock/Skeleton';
-import PaginationControlled from '../components/PaginationControlled';
-import { AppDispatch } from '../redux/store';
-import { selectFilter } from '../redux/filter/selector';
-import { TypeProductsSlice } from '../redux/product/type';
-import { selectProducts } from '../redux/product/slice';
-import { setFilters } from '../redux/filter/slice';
-import { fetchProduct } from '../redux/product/asyncAction';
+import { Categories, Sort, typesSort, PizzaBlock, Skeleton, PaginationControlled} from '../components';
+import { AppDispatch, selectFilter, TypeProductsSlice, setFilters, fetchProduct, selectProducts } from '../redux';
 
 const LIMIT = 4;
 

@@ -1,12 +1,12 @@
-import './scss/app.scss';
-import Header from './components/Header';
 import { Route, Routes } from 'react-router-dom';
-import Home from './pages/Home';
-import NotFound from './pages/NotFound';
 import { Suspense, lazy } from 'react';
+import './scss/app.scss';
+
+import { Header } from './components';
+import { Home, NotFound } from './pages';
 
 const Cart = lazy(() => import(/*webpackChunkName: "Cart"*/ './pages/Cart'));
-const PizzaBlockDescription = lazy(() => import(/*webpackChunkName: "PizzaBlockDescription"*/ './pages/PizzaBlockDescription/PizzaBlockDescription'));
+const PizzaBlockDescription = lazy(() => import(/*webpackChunkName: "PizzaBlockDescription"*/ './pages/PizzaBlockDescription'));
 
 function App() {
   return (

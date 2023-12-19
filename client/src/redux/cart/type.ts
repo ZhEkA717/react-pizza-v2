@@ -3,16 +3,16 @@ export interface TypeCartSlice {
     items: TypeCartItem[]
   }
   
-  export type TypeCartItem = {
-    count: number,
-    product: TypeCartProduct
-  }
-  
-  export type TypeCartProduct = {
-    id: string,
-    title: string,
-    imageUrl: string,
-    price: number,
-    type: string,
-    size: number
-  }
+export type TypeCartItem = {
+  count: number,
+  product: TypeCartProduct
+}
+
+export type TypeCartProduct = {
+  id: string,
+  title: string,
+  imageUrl: string,
+  price: number,
+  type: string,
+  size: number
+}

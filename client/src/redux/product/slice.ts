@@ -1,15 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../store';
 import { TypePizza, TypeProductsSlice } from './type';
 import { fetchProduct, fetchProductItem } from './asyncAction';
-
-export type TypeFetchParams = {
-  category: number | string,
-  sortBy: string | undefined,
-  order: string,
-  page: number,
-  limit: number, 
-}
 
 const initialState: TypeProductsSlice = {
     items: [],
@@ -51,7 +42,5 @@ export const productSlice = createSlice({
     })
   },
 })
-
-export const selectProducts = (state: RootState) => state.products;
 
 export default productSlice.reducer;

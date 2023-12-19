@@ -1,11 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { selectProducts } from "../../redux/product/slice";
-import PizzaBlock from "../../components/PizzaBlock";
-import Skeleton from "../../components/PizzaBlock/Skeleton";
-import { fetchProductItem } from "../../redux/product/asyncAction";
-import { AppDispatch } from "../../redux/store";
+
+import { AppDispatch, selectProducts, fetchProductItem} from '../../redux';
+import { PizzaBlock, Skeleton } from '../../components';
+
 import styles from './PizzaBlockDescription.module.scss'
 
 const PizzaBlockDescription = () => {

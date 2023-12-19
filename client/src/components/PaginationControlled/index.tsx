@@ -1,9 +1,9 @@
+import { ChangeEvent, FC, memo } from 'react';
+import { useDispatch } from 'react-redux';
 import Pagination from '@mui/material/Pagination';
 import styles from '../PaginationControlled/Pagination.module.scss'
-import { useDispatch } from 'react-redux';
-import { ChangeEvent, FC, memo } from 'react';
-import { setPageCount } from '../../redux/filter/slice';
-import { PaginationProps } from '../../redux/filter/type';
+
+import { setPageCount, PaginationProps } from '../../redux';
 
 const PAGES = 3;
 

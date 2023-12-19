@@ -1,0 +1,11 @@
+export {default as arrowDownIcon} from './arrow-down.svg'; 
+export {default as arrowTopIcon} from './arrow-top.svg'; 
+export {default as cartIcon} from './cart-icon.svg'; 
+export {default as cartImg} from './cart.svg'; 
+export {default as emptyCart} from './empty-cart.png'; 
+export {default as greyArrowLeftIcon} from './grey-arrow-left.svg'; 
+export {default as minusIcon} from './minus.svg'; 
+export {default as pizzaLogoIcon} from './pizza-logo.svg'; 
+export {default as plusIcon} from './plus.svg';
+export {default as searchIcon} from './search-icon.svg';
+export {default as trashIcon} from './trash.svg';

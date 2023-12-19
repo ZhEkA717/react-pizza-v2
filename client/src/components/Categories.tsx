@@ -1,12 +1,12 @@
+import { FC, memo } from 'react';
 import { useDispatch } from 'react-redux';
 import '../scss/app.scss';
-import React from 'react';
-import { CategoriesProps } from '../redux/filter/type';
-import { setCategoryId } from '../redux/filter/slice';
+
+import { CategoriesProps, setCategoryId } from '../redux';
 
 const categories = ['Все','Мясные','Вегетарианская','Гриль','Острые','Закрытые'];
 
-const Categories:React.FC<CategoriesProps> = React.memo(({categoryId}) => {
+const Categories:FC<CategoriesProps> = memo(({categoryId}) => {
   const dispatch = useDispatch();
   return (
   <div className="categories">

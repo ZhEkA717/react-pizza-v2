@@ -17,3 +17,11 @@ export type TypePizza = {
     rating: number,
     recipe: string
 }
+
+export type TypeFetchParams = {
+    category: number | string,
+    sortBy: string | undefined,
+    order: string,
+    page: number,
+    limit: number, 
+}
