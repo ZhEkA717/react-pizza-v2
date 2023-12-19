@@ -8,7 +8,6 @@ const categories = ['Все','Мясные','Вегетарианская','Гр
 
 const Categories:React.FC<CategoriesProps> = React.memo(({categoryId}) => {
   const dispatch = useDispatch();
-  console.log('render');
   return (
   <div className="categories">
       <ul>

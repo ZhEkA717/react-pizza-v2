@@ -15,7 +15,7 @@ const PaginationControlled: FC<PaginationProps> = memo(({pageCount}) => {
   };
 
   return (
-      <Pagination className={styles.root} count={PAGES} page={pageCount} onChange={handleChange} />
+      <Pagination size="large" className={styles.root} count={PAGES} page={pageCount} onChange={handleChange} />
   );
 });
 

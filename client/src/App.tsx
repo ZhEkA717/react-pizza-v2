@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import Cart from './pages/Cart';
-import PizzaBlockDescription from './pages/PizzaBlockDescription';
+import PizzaBlockDescription from './pages/PizzaBlockDescription/PizzaBlockDescription';
 
 function App() {
   return (

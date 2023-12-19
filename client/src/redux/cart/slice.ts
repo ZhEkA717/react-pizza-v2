@@ -1,30 +1,13 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { TypeCartItem, TypeCartProduct, TypeCartSlice } from './type';
+import updateTotalPrice from '../../utils/updateTotalPrice';
+import findProduct from '../../utils/findProduct';
+import deleteItemFromCart from '../../utils/deleteItemFromCart';
 
 const initialState: TypeCartSlice = {
     items: [],
     totalPrice: 0,
 }
-
-const findProduct = (
-  arr: TypeCartItem[], 
-  id: string, 
-  type: string, 
-  size: number) : {index: number | undefined, findItem: TypeCartItem | undefined} => {
-  let index;
-  const findItem = arr.find(({product}, i) => {
-    index = i;
-    return (product.id === id && product.type === type && product.size === size); 
-  })
-  return {
-    index,
-    findItem
-  }
-}
-
-const updateTotalPrice = (arr: TypeCartItem[]) => arr
-  .reduce((start: number, {product, count} : TypeCartItem) => start + product.price*count, 0);
-
 
 export const cartSlice = createSlice({
   name: 'cart',
@@ -32,24 +15,18 @@ export const cartSlice = createSlice({
   reducers: {
     addProduct(state, action: PayloadAction<TypeCartItem>) {
       const {id, type, size} = action.payload.product;
-
       const {findItem} = findProduct(state.items, id, type, size);
 
-      if (findItem) {
-        findItem.count += 1;
-      } else {
+      findItem ? 
+        findItem.count += 1 : 
         state.items.push(action.payload);
-      }
-  
       state.totalPrice = updateTotalPrice(state.items);
     },
     removeProduct(state, action:PayloadAction<TypeCartProduct>) {
       const {id, type, size} = action.payload;
       const {index} = findProduct(state.items, id, type, size);
-      if (index || index === 0) {
-        delete state.items[index];
-      }
-      state.items = state.items.filter(item => item && item);
+
+      state.items = deleteItemFromCart(index, state.items)
       state.totalPrice = updateTotalPrice(state.items);
     },
     clearProduct(state) {
@@ -63,19 +40,13 @@ export const cartSlice = createSlice({
       state.totalPrice = updateTotalPrice(state.items);
     },
     minusProduct(state, action:PayloadAction<TypeCartItem>) {
-      console.log(action.payload);
-
-      const {id, type, size} = action.payload.product;
-      const {count} = action.payload;
+      const {product:{id, type, size}, count} = action.payload;
       const {findItem, index} = findProduct(state.items, id, type, size);
-      if (count > 1 ) {
-        findItem && (findItem.count -= 1);
-      } else {
-        if (index || index === 0) {
-          delete state.items[index];
-        }
-        state.items = state.items.filter(item => item && item)
-      }
+  
+      count > 1 ? 
+        findItem && (findItem.count -= 1) : 
+        state.items = deleteItemFromCart(index, state.items);
+    
       state.totalPrice = updateTotalPrice(state.items);
     }
   },

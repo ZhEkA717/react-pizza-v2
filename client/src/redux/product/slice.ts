@@ -1,8 +1,7 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
-import env from 'react-dotenv';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { TypePizza, TypeProductsSlice } from './type';
+import { fetchProduct, fetchProductItem } from './asyncAction';
 
 export type TypeFetchParams = {
   category: number | string,
@@ -11,22 +10,6 @@ export type TypeFetchParams = {
   page: number,
   limit: number, 
 }
-
-export const fetchProduct = createAsyncThunk<TypePizza[], TypeFetchParams>(
-  'product/fetchProductStatus',
-  async (params) => {
-    const {data} = await axios.get<TypePizza[]>(env.API_URL, {params});
-    return data;
-  }
-)
-
-export const fetchProductItem = createAsyncThunk<TypePizza, string>(
-  'product/fetchProductItemStatus',
-  async (id) => {
-    const {data} = await axios.get<TypePizza>(env.API_URL + id,)
-    return data;
-  }
-)
 
 const initialState: TypeProductsSlice = {
     items: [],

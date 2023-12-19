@@ -7,6 +7,7 @@ import EmptyCart from '../components/EmptyCart';
 import { selectCart } from '../redux/cart/selectors';
 import { TypeCartSlice } from '../redux/cart/type';
 import { clearProduct } from '../redux/cart/slice';
+import getCountPizza from '../utils/getCountPizza';
 
 const Cart = () => {
   const {totalPrice, items: products}: TypeCartSlice = useSelector(selectCart);
@@ -31,7 +32,7 @@ const Cart = () => {
             </div>
             <div className="cart__bottom">
               <div className="cart__bottom-details">
-                <span> Всего пицц: <b>{products.reduce((start, {count}) => start + count, 0 )} шт.</b> </span>
+                <span> Всего пицц: <b>{getCountPizza(products)} шт.</b> </span>
                 <span> Сумма заказа: <b>{totalPrice} ₽</b> </span>
               </div>
               <div className="cart__bottom-buttons">

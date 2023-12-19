@@ -13,8 +13,9 @@ import PaginationControlled from '../components/PaginationControlled';
 import { AppDispatch } from '../redux/store';
 import { selectFilter } from '../redux/filter/selector';
 import { TypeProductsSlice } from '../redux/product/type';
-import { fetchProduct, selectProducts } from '../redux/product/slice';
+import { selectProducts } from '../redux/product/slice';
 import { setFilters } from '../redux/filter/slice';
+import { fetchProduct } from '../redux/product/asyncAction';
 
 const LIMIT = 4;
 
