@@ -3,8 +3,10 @@ import Header from './components/Header';
 import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
-import Cart from './pages/Cart';
-import PizzaBlockDescription from './pages/PizzaBlockDescription/PizzaBlockDescription';
+import { Suspense, lazy } from 'react';
+
+const Cart = lazy(() => import(/*webpackChunkName: "Cart"*/ './pages/Cart'));
+const PizzaBlockDescription = lazy(() => import(/*webpackChunkName: "PizzaBlockDescription"*/ './pages/PizzaBlockDescription/PizzaBlockDescription'));
 
 function App() {
   return (
@@ -14,8 +16,16 @@ function App() {
           <div className="container">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/cart" element={<Cart/>} />
-              <Route path="/pizza/:id" element={<PizzaBlockDescription/>} />
+              <Route path="/cart" element={
+                <Suspense fallback={<div>Loading...</div>}>
+                  <Cart/>
+                </Suspense>
+              } />
+              <Route path="/pizza/:id" element={
+                <Suspense>
+                  <PizzaBlockDescription/>
+                </Suspense>
+              } />
               <Route path="*" element={<NotFound/>} />
             </Routes>
           </div>
