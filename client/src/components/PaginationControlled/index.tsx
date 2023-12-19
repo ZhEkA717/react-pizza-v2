@@ -1,13 +1,13 @@
 import Pagination from '@mui/material/Pagination';
 import styles from '../PaginationControlled/Pagination.module.scss'
-import { useDispatch, useSelector } from 'react-redux';
-import { selectFilter, setPageCount } from '../../redux/slices/filterSlice';
-import { ChangeEvent } from 'react';
+import { useDispatch } from 'react-redux';
+import { setPageCount } from '../../redux/slices/filterSlice';
+import { ChangeEvent, FC, memo } from 'react';
+import { PaginationProps } from '../../types/filter.type';
 
 const PAGES = 3;
 
-function PaginationControlled() {
-  const {pageCount} = useSelector(selectFilter);
+const PaginationControlled: FC<PaginationProps> = memo(({pageCount}) => {
   const dispatch = useDispatch();
 
   const handleChange = (_:ChangeEvent<unknown>, value: number) => {
@@ -17,6 +17,6 @@ function PaginationControlled() {
   return (
       <Pagination className={styles.root} count={PAGES} page={pageCount} onChange={handleChange} />
   );
-}
+});
 
 export default PaginationControlled;

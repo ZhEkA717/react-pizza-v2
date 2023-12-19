@@ -81,8 +81,8 @@ const Home = () => {
   return (
     <>
       <div className="content__top">
-          <Categories />
-          <Sort/>
+          <Categories categoryId={categoryId} />
+          <Sort sortObj={sortObj} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
@@ -101,7 +101,7 @@ const Home = () => {
           )
         }
       </div>
-      <PaginationControlled />
+      <PaginationControlled pageCount={pageCount}/>
     </>
   );
 };

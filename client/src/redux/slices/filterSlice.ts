@@ -16,7 +16,7 @@ export const filterSlice = createSlice({
   name: 'filters',
   initialState,
   reducers: {
-    setSearchValue(state, action:PayloadAction<string>) {
+    setSearchValue: (state, action:PayloadAction<string>) => {
       state.searchValue = action.payload;
     },
     setCategoryId: (state, action:PayloadAction<number>) => {
@@ -29,7 +29,6 @@ export const filterSlice = createSlice({
       state.pageCount = action.payload;
     },
     setFilters: (state, action:PayloadAction<TypeFilters>) => {
-      console.log(action.payload);
       const {categoryId, pageCount, sortObj} = action.payload;
       state.categoryId = Number(categoryId);
       state.pageCount = Number(pageCount);

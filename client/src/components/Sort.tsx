@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { FC, memo, useEffect, useRef, useState } from 'react';
 import arrowTop from '../img/arrow-top.svg';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectFilter, setSort } from '../redux/slices/filterSlice';
-import { TypeSortObj } from '../types/filter.type';
+import { useDispatch } from 'react-redux';
+import { setSort } from '../redux/slices/filterSlice';
+import { SortProps, TypeSortObj } from '../types/filter.type';
 
 export const typesSort: TypeSortObj[] = [
   {name: 'популярности', sortProperty: 'rating'},
@@ -10,8 +10,7 @@ export const typesSort: TypeSortObj[] = [
   {name: 'алфавиту', sortProperty: 'title'}
 ];
 
-const Sort = () => {
-  const {sortObj} : {sortObj: TypeSortObj | undefined} = useSelector(selectFilter);
+const Sort:FC<SortProps> = memo(({sortObj}) => {
   const dispatch = useDispatch();
   const sortRef = useRef<HTMLDivElement>(null);
 
@@ -65,6 +64,6 @@ const Sort = () => {
         
       </div>
     );
-};
+});
 
 export default Sort;
