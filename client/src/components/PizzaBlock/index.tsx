@@ -8,7 +8,7 @@ import { TypePizza, selectCart, TypeCartSlice, addProduct } from '../../redux';
 
 export const typesPizza = ['тонкое', 'традиционное'];
 
-const PizzaBlock = ({id,title, imageUrl, types, sizes, price}: TypePizza) => {
+export const PizzaBlock = ({id,title, imageUrl, types, sizes, price}: TypePizza) => {
   const {items:products}: TypeCartSlice = useSelector(selectCart)
   const dispatch = useDispatch();
 
@@ -81,5 +81,3 @@ const PizzaBlock = ({id,title, imageUrl, types, sizes, price}: TypePizza) => {
     </div>
     );
 };
-
-export default PizzaBlock;

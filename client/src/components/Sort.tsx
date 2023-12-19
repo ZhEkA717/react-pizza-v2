@@ -11,7 +11,7 @@ export const typesSort: TypeSortObj[] = [
   { name: "алфавиту", sortProperty: "title" },
 ];
 
-const Sort: FC<SortProps> = memo(({ sortObj }) => {
+export const Sort: FC<SortProps> = memo(({ sortObj }) => {
   const dispatch = useDispatch();
   const sortRef = useRef<HTMLDivElement>(null);
 
@@ -68,5 +68,3 @@ const Sort: FC<SortProps> = memo(({ sortObj }) => {
     </div>
   );
 });
-
-export default Sort;

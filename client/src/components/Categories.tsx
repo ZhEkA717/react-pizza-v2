@@ -6,7 +6,7 @@ import { CategoriesProps, setCategoryId } from '../redux';
 
 const categories = ['Все','Мясные','Вегетарианская','Гриль','Острые','Закрытые'];
 
-const Categories:FC<CategoriesProps> = memo(({categoryId}) => {
+export const Categories:FC<CategoriesProps> = memo(({categoryId}) => {
   const dispatch = useDispatch();
   return (
   <div className="categories">
@@ -25,5 +25,3 @@ const Categories:FC<CategoriesProps> = memo(({categoryId}) => {
     </div>
   )
 });
-  
-export default Categories;

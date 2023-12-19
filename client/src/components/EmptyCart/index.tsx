@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { cartImg } from '../../img/';
 import styles from './EmptyCart.module.scss';
 
-const EmptyCart: FC = () => {
+export const EmptyCart: FC = () => {
     return (
         <div className={styles.root}>
             <img src={cartImg} alt="cart-icon" />
@@ -12,5 +12,3 @@ const EmptyCart: FC = () => {
         </div>
     );
 };
-
-export default EmptyCart;

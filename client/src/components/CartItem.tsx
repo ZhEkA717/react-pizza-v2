@@ -3,7 +3,7 @@ import { plusIcon, minusIcon } from '../img';
 
 import { minusProduct, plusProduct, removeProduct, TypeCartItem } from '../redux';
 
-const CartItem = ({count, product}: TypeCartItem) => {
+export const CartItem = ({count, product}: TypeCartItem) => {
   const dispatch = useDispatch();
     return (
       <div className="cart__item">
@@ -40,5 +40,3 @@ const CartItem = ({count, product}: TypeCartItem) => {
       </div>
     );
 };
-
-export default CartItem;

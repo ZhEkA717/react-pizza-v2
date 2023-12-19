@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useRef, useState } from 'react';
+import { ChangeEvent, memo, useCallback, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import debounce from 'lodash.debounce';
 import styles from './Search.module.scss';
@@ -7,7 +7,7 @@ import { searchIcon } from '../../img';
 
 import { setSearchValue } from '../../redux';
 
-const Search = () => {
+export const Search = memo(() => {
     const dispatch = useDispatch();
     const inputRef = useRef<HTMLInputElement>(null);
     const [value, setValue] = useState('');
@@ -48,6 +48,4 @@ const Search = () => {
             >X</div>}
         </div>
     );
-};
-
-export default Search;
+})

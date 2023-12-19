@@ -7,7 +7,7 @@ import { setPageCount, PaginationProps } from '../../redux';
 
 const PAGES = 3;
 
-const PaginationControlled: FC<PaginationProps> = memo(({pageCount}) => {
+export const PaginationControlled: FC<PaginationProps> = memo(({pageCount}) => {
   const dispatch = useDispatch();
 
   const handleChange = (_:ChangeEvent<unknown>, value: number) => {
@@ -18,5 +18,3 @@ const PaginationControlled: FC<PaginationProps> = memo(({pageCount}) => {
       <Pagination size="large" className={styles.root} count={PAGES} page={pageCount} onChange={handleChange} />
   );
 });
-
-export default PaginationControlled;

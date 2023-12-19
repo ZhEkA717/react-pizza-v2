@@ -7,7 +7,7 @@ import { Search } from '../components';
 import { selectCart } from '../redux';
 import { getCountPizza } from '../utils';
 
-function Header() {
+export const Header = () => {
   const {totalPrice, items} = useSelector(selectCart);
   const {pathname} = useLocation();
     return (
@@ -36,5 +36,3 @@ function Header() {
     </div>
     )
 }
-  
-export default Header;
