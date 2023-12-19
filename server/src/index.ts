@@ -1,5 +1,6 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from 'dotenv';
+import sequelize from './db';
 
 dotenv.config();
 
@@ -10,6 +11,18 @@ app.get("/", (req: Request, res: Response) => {
     res.send("Express + TS SERVER");
 });
 
-app.listen(port, () => {
-    console.log(`[server]: Server is running at http://localhost:${port}`);
-})
+
+
+const start = async () => {
+    try {
+        await sequelize.authenticate();
+        await sequelize.sync();
+        app.listen(port, () => {
+            console.log(`[server]: Server is running at http://localhost:${port}`);
+        })
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+start();
