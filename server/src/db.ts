@@ -1,10 +1,12 @@
 import { Sequelize, Dialect } from "sequelize";
+import {config} from 'dotenv';
+config();
 
-const dbName = process.env.DB_NAME as string;
-const dbUser = process.env.DB_USER as string;
-const dbPassword = process.env.DB_PASSWORD;
+const dbName = String(process.env.DB_NAME);
+const dbUser = String(process.env.DB_USER);
+const dbPassword = String(process.env.DB_PASSWORD);
 
-const dbDriver = process.env.DB_DRIVER as Dialect;
+
 const dbHost = process.env.DB_HOST;
 const dbPort = Number(process.env.DB_PORT);
 
@@ -14,7 +16,7 @@ export default new Sequelize(
     dbUser,
     dbPassword,
     {
-        dialect: dbDriver,
+        dialect: "postgres",
         host: dbHost,
         port: dbPort
     }
