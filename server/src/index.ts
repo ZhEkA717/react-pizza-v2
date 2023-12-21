@@ -1,24 +1,31 @@
-import express, { Express, Request, Response } from "express";
 import dotenv from 'dotenv';
-import sequelize from './db';
-
 dotenv.config();
+import express, { Express } from "express";
+import sequelize from './db';
+import cors from 'cors';
+import fileUpload from 'express-fileupload'
+import router from './routes/index';
+import errorHandler from './middleware/ErrorHandlingMiddleware';
+
+const models = import('./models/models');
+
+const PORT = process.env.PORT || 7000;
 
 const app: Express = express();
-const port = process.env.PORT || 7000;
+app.use(cors());
+app.use(express.json());
+app.use(fileUpload({}));
+app.use('/api', router);
 
-app.get("/", (req: Request, res: Response) => {
-    res.send("Express + TS SERVER");
-});
-
-
+// Обработка ошибок, последний Middleware
+app.use(errorHandler);
 
 const start = async () => {
     try {
         await sequelize.authenticate();
         await sequelize.sync();
-        app.listen(port, () => {
-            console.log(`[server]: Server is running at http://localhost:${port}`);
+        app.listen(PORT, () => {
+            console.log(`[server]: Server is running at http://localhost:${PORT}`);
         })
     } catch (e) {
         console.log(e);
