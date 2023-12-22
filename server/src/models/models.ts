@@ -47,9 +47,9 @@ export const Rating = sequelize.define('rating', {
     rate: { type: DataTypes.INTEGER, allowNull: false },
 });
 
-export const TypeCategorySize = sequelize.define('type_category_size', {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-});
+// export const TypeCategorySize = sequelize.define('type_category_size', {
+//     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+// });
 
 User.hasOne(Basket);
 Basket.belongsTo(User);
@@ -72,9 +72,9 @@ Product.belongsTo(Size);
 Product.hasMany(BasketProduct);
 BasketProduct.belongsTo(Product);
 
-Type.belongsToMany(Category, { through: TypeCategorySize });
-Category.belongsToMany(Type, { through: TypeCategorySize });
-Size.belongsToMany(Category, { through: TypeCategorySize });
-Category.belongsToMany(Size, { through: TypeCategorySize });
-Size.belongsToMany(Type, { through: TypeCategorySize });
-Type.belongsToMany(Size, { through: TypeCategorySize });
+// Type.belongsToMany(Category, { through: TypeCategorySize });
+// Category.belongsToMany(Type, { through: TypeCategorySize });
+// Size.belongsToMany(Category, { through: TypeCategorySize });
+// Category.belongsToMany(Size, { through: TypeCategorySize });
+// Size.belongsToMany(Type, { through: TypeCategorySize });
+// Type.belongsToMany(Size, { through: TypeCategorySize });

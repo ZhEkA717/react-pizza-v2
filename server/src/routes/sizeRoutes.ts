@@ -5,8 +5,8 @@ const sizeRouter = Router();
 
 sizeRouter.post('/', SizeController.add);
 sizeRouter.get('/', SizeController.getALL);
-sizeRouter.delete('/', SizeController.remove);
-sizeRouter.put('/', SizeController.update);
+sizeRouter.delete('/:id', SizeController.remove);
+sizeRouter.put('/:id', SizeController.update);
 
 
 export default sizeRouter;

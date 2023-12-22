@@ -7,7 +7,7 @@ export const put = async (
   model: typeof Type | typeof Category | typeof Size
 ) => {
   const { id } = req.params;
-  await model.update(req.body, {
+  const updated = await model.update(req.body, {
     where: { id },
   });
   return res.json(id);

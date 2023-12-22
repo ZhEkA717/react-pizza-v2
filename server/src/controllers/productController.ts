@@ -1,37 +1,52 @@
 import { NextFunction, Request, Response } from "express";
-import { FileArray, UploadedFile } from "express-fileupload";
-import path from "path";
-
-import uuid from "uuid";
 import { Product } from "../models/models";
 import ApiError from "../error/ApiError";
-import { get } from "../utils";
+import { _delete, get, getById, removeImg } from "../utils";
+import { generateFileName } from "../utils/generateFileName";
 
 class ProductController {
   async create(req: Request, res: Response, next: NextFunction) {
-   try {
-    const {body} = req;
-    const file:FileArray | null | undefined= req.files;
-    const imageUrl = file?.imageUrl as UploadedFile;
-    let filename = uuid?.v4() + ".jpg";
-    imageUrl?.mv(path.resolve(__dirname, '..', 'static',  filename));
+    try {
+      const { body } = req;
 
-    const product = await Product.create({
-      ...body,
-      imageUrl: filename,
-    });
-    console.log(req.body);
-    return res.json(product);
-   } catch(err: any) {
-    console.log('err');
-    next(ApiError.badRequest(err.message));
-   }
+      const { filename, saveStaticImage } = generateFileName(req);
+   
+      const types = body.types.split(",").map((item: string) => Number(item));
+      const sizes = body.sizes.split(",").map((item: string) => Number(item));
+
+      const createBody = {
+        ...body,
+        types,
+        sizes,
+        imageUrl: filename,
+      }
+
+      const product = await Product.create(createBody);
+      saveStaticImage();
+
+      return res.json(product);
+    } catch (err: any) {
+      next(ApiError.badRequest(err.message));
+    }
   }
 
   async getALL(req: Request, res: Response) {
     return await get(req, res, Product);
   }
-  async getOne(req: Request, res: Response) {}
+
+  async getOne(req: Request, res: Response) {
+    return await getById(req, res, Product);
+  }
+
+  async remove(req: Request, res: Response) {
+    const item = (await _delete(req, res, Product))?.toJSON();
+    if (item) await removeImg(item.imageUrl);
+    return res.json(item);
+  }
+
+  async update(req: Request, res: Response) {
+    
+  }
 }
 
 export default new ProductController();
