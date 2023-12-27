@@ -17,3 +17,17 @@ export const generateFileName = (req: Request) => {
         saveStaticImage,
     }
 }
+
+export const generateBody = (req: Request, filename: string) => {
+    const { body } = req;
+
+    const types = body.types.split(",").map((item: string) => Number(item));
+    const sizes = body.sizes.split(",").map((item: string) => Number(item));
+
+    return {
+        ...body,
+        types,
+        sizes,
+        imageUrl: filename,
+    };
+} 
