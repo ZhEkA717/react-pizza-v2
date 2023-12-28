@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { Product } from "../models/models";
 import ApiError from "../error/ApiError";
-import { _delete, create, get, getById, put, removeImg } from "../utils";
-import { generateBody, generateFileName } from "../utils/generateFileName";
+import { _delete, create, getById, put, removeImg, generateBody, generateFileName } from "../utils";
+import { Op } from "sequelize";
 
 class ProductController {
   async create(req: Request, res: Response, next: NextFunction) {
@@ -18,7 +18,46 @@ class ProductController {
   }
 
   async getALL(req: Request, res: Response) {
-    return await get(req, res, Product);
+    const { categoryId, search, order, sort, page, size } = req.query;
+    let options;
+   
+    if (!categoryId && !search) {
+      options = {};
+    }
+    if (categoryId && !search) {
+      Number(categoryId) === 1 ?
+      options = {} :
+      options = { where: { categoryId } }
+    }
+    if (!categoryId && search) {
+      options = {
+        where: {
+          title: { [Op.iLike]: `%${search}%` },
+        },
+      }
+    }
+
+    if (categoryId && search) {
+      options = {
+        where: {
+          categoryId,
+          title: { [Op.iLike]: `%${search}%` },
+        },
+      }
+    }
+
+    const product: any = await Product.findAndCountAll({
+      ...options,
+      order: [
+        [
+          sort ? String(sort) : 'id', 
+          order ? String(order) : 'ASC'
+        ],
+      ],
+      limit: Number(size) || 3,
+      offset: Number(page) * Number(size) || 0,
+    });
+    return res.json(product);
   }
 
   async getOne(req: Request, res: Response) {
@@ -44,11 +83,10 @@ class ProductController {
         const updateProduct = await put(req, res, Product, body);
         saveStaticImage();
         return updateProduct;
-      }   
-    } catch(err: any) {
+      }
+    } catch (err: any) {
       next(ApiError.badRequest(err.message));
     }
-   
   }
 }
 

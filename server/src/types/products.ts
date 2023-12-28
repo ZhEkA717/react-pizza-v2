@@ -1,3 +1,7 @@
+export interface IAllProduct {
+    count: number,
+    rows: IProduct[]
+}
 export interface IProduct {
     id: number,
     imageUrl: string,

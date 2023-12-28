@@ -6,14 +6,25 @@ import cors from 'cors';
 import fileUpload from 'express-fileupload'
 import router from './routes/index';
 import errorHandler from './middleware/ErrorHandlingMiddleware';
+import path from 'path';
 
 const models = import('./models/models');
 
 const PORT = process.env.PORT || 7000;
 
+// -----------------------------------------
+// sequelize.sync({force: true}).then(async () => {
+//     for (let i = 0; i < 3; i++) {
+//         const user = {}
+//         await Category.create(user);
+//     }
+// })
+// -----------------------------------------
+
 const app: Express = express();
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.resolve(__dirname, 'static')));
 app.use(fileUpload({}));
 app.use('/api', router);
 

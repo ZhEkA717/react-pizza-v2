@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
 import { Category, Product, Size, Type } from "../models/models";
-import fs from 'fs';
-import path from "path";
 
 export const _delete = async (
   req: Request,
@@ -15,11 +13,3 @@ export const _delete = async (
   });
   return deleted;
 };
-
-export const removeImg = async (url: string) => {
-  fs.unlink(path.resolve(__dirname, '../static', url), (err) => {
-    err
-        ? console.log('FS operation failed')
-        : console.log('File deleted successfully!');
-  })
-}
