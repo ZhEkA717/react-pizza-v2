@@ -11,6 +11,8 @@ class ProductController {
       const body = generateBody(req, filename);
       const product = await create(req, res, Product, body);
       saveStaticImage();
+      res.statusMessage = 'Created';
+      res.status(201);
       return res.json(product);
     } catch (err: any) {
       next(ApiError.badRequest(err.message));
@@ -18,18 +20,19 @@ class ProductController {
   }
 
   async getALL(req: Request, res: Response) {
-    const { categoryId, search, order, sort, page, size } = req.query;
+    const { category, search, order, sort, page, limit } = req.query;
+
     let options;
    
-    if (!categoryId && !search) {
+    if (!category && !search) {
       options = {};
     }
-    if (categoryId && !search) {
-      Number(categoryId) === 1 ?
+    if (category && !search) {
+      Number(category) === 1 ?
       options = {} :
-      options = { where: { categoryId } }
+      options = { where: { category } }
     }
-    if (!categoryId && search) {
+    if (!category && search) {
       options = {
         where: {
           title: { [Op.iLike]: `%${search}%` },
@@ -37,10 +40,10 @@ class ProductController {
       }
     }
 
-    if (categoryId && search) {
+    if (category && search) {
       options = {
         where: {
-          categoryId,
+          category,
           title: { [Op.iLike]: `%${search}%` },
         },
       }
@@ -54,18 +57,28 @@ class ProductController {
           order ? String(order) : 'ASC'
         ],
       ],
-      limit: Number(size) || 3,
-      offset: Number(page) * Number(size) || 0,
+      limit: Number(limit) || 3,
+      offset: Number(page) * Number(limit) - Number(limit) || 0,
     });
     return res.json(product);
   }
 
-  async getOne(req: Request, res: Response) {
-    return res.json(await getById(req, res, Product));
+  async getOne(req: Request, res: Response, next: NextFunction) {
+    const {id} = req.params;
+    const product = await Product.findOne({
+      where: {id},
+      // include: [
+      //   {model: Category, as: 'category' }
+      // ]
+    })
+    if (!product) {
+      return next(ApiError.badRequest('NOT FOUND'));
+    }
+    return res.json(product);
   }
 
-  async remove(req: Request, res: Response) {
-    const item = (await _delete(req, res, Product))?.toJSON();
+  async remove(req: Request, res: Response, next: NextFunction) {
+    const item = (await _delete(req, res, Product, next))?.toJSON();
     if (item) await removeImg(item.imageUrl);
     return res.json(item);
   }
@@ -83,6 +96,8 @@ class ProductController {
         const updateProduct = await put(req, res, Product, body);
         saveStaticImage();
         return updateProduct;
+      } else {
+        next(ApiError.badRequest("NOT FOUND"));
       }
     } catch (err: any) {
       next(ApiError.badRequest(err.message));
