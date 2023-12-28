@@ -7,5 +7,6 @@ export const get = async (
   res: Response,
   model: typeof Type | typeof Category | typeof Size | typeof Product
 ) => { 
-  return res.json(await model.findAll());
+  const item = await model.findAll();
+  return item;
 };

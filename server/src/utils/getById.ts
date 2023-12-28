@@ -10,5 +10,5 @@ export const getById = async (
   const item = await model.findOne({
     where: { id },
   });
-  return res.json(item);
+  return item;
 };

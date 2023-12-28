@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { Product } from "../models/models";
 import ApiError from "../error/ApiError";
-import { _delete, create, getById, put, removeImg, generateBody, generateFileName } from "../utils";
+import { _delete, create, put, removeImg, generateBody, generateFileName } from "../utils";
 import { Op } from "sequelize";
 
 class ProductController {
@@ -95,7 +95,7 @@ class ProductController {
         const body = generateBody(req, filename);
         const updateProduct = await put(req, res, Product, body);
         saveStaticImage();
-        return updateProduct;
+        return res.json(updateProduct);
       } else {
         next(ApiError.badRequest("NOT FOUND"));
       }

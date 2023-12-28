@@ -1,12 +1,13 @@
 import { Router } from "express";
 import SizeController from "../controllers/sizeController";
+import CheckMiddleware from "../middleware/CheckMiddleware";
 
 const sizeRouter = Router();
 
-sizeRouter.post('/', SizeController.add);
+sizeRouter.post('/',  CheckMiddleware("admin"), SizeController.add);
 sizeRouter.get('/', SizeController.getALL);
-sizeRouter.delete('/:id', SizeController.remove);
-sizeRouter.put('/:id', SizeController.update);
+sizeRouter.delete('/:id',  CheckMiddleware("admin"), SizeController.remove);
+sizeRouter.put('/:id',  CheckMiddleware("admin"), SizeController.update);
 
 
 export default sizeRouter;

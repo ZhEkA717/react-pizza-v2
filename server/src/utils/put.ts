@@ -12,5 +12,5 @@ export const put = async (
   await model.update(body || req.body, {
     where: { id },
   });
-  return res.json(id);
+  return id;
 };
