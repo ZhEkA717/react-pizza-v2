@@ -15,7 +15,6 @@ const Home = () => {
     const dispatch = useDispatch<AppDispatch>();
     const isSearch = useRef(false);
     const isMounted = useRef(false);
-
     const { items: pizzaItems, status }:TypeProductsSlice = useSelector(selectProducts); 
 
     const navigate = useNavigate();
