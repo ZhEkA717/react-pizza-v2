@@ -1,12 +1,10 @@
-import { Route, Routes } from 'react-router-dom';
-import { Suspense, lazy } from 'react';
 import './scss/app.scss';
 
 import { Header } from './components';
-import { Home, NotFound } from './pages';
+import { AppRouter } from './components/AppRouter';
 
-const Cart = lazy(() => import(/*webpackChunkName: "Cart"*/ './pages/Cart'));
-const PizzaBlockDescription = lazy(() => import(/*webpackChunkName: "PizzaBlockDescription"*/ './pages/PizzaBlockDescription'));
+// const Cart = lazy(() => import(/*webpackChunkName: "Cart"*/ './pages/Cart'));
+// const PizzaBlockDescription = lazy(() => import(/*webpackChunkName: "PizzaBlockDescription"*/ './pages/PizzaBlockDescription'));
 
 function App() {
   return (
@@ -14,7 +12,7 @@ function App() {
         <Header/>
         <div className="content">
           <div className="container">
-            <Routes>
+            {/* <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/cart" element={
                 <Suspense fallback={<div>Loading...</div>}>
@@ -27,7 +25,8 @@ function App() {
                 </Suspense>
               } />
               <Route path="*" element={<NotFound/>} />
-            </Routes>
+            </Routes> */}
+            <AppRouter/>
           </div>
         </div>
     </div>
